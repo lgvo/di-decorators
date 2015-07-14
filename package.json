@@ -1,6 +1,6 @@
 {
   "name": "di-decorators",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Dependency Injection for ES6",
   "main": "common.js",
   "dependencies": {},
