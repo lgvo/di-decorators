@@ -30,7 +30,7 @@ export function provides(type, factory) {
 
 export function singleton(type) {
     type.$$_provider = function() {
-        var instance = defaultProvider(type);
+        var instance = defaultProvider(type)();
 
         type.$$_provider = function() {
             return instance;

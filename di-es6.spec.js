@@ -57,6 +57,9 @@ describe('Singleton', function() {
     it('should only have one instance', function() {
        @singleton
       class Single {
+          constructor() {
+              this.name = 'singleton';
+          }
 
       } 
 
@@ -66,6 +69,7 @@ describe('Singleton', function() {
 
       expect(instance(Single)).to.equal(instance(Single));
       expect(instance(Test)).not.to.equal(instance(Test));
+      expect(instance(Single).name).to.equal('singleton');
       
     });
     
