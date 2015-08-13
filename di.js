@@ -1,43 +1,45 @@
-export function proxy(type) {
-    if (!type.$$_proxy) {
-        makeProxy(type);
-    }
-    return type.$$_proxy;
-}
+// use Symbol if supported
+var Symbol = Symbol || function(str) {
+    return '__$$' + str;
+};
 
-function makeProxy(type) {
-    var proxy = {};
-    Object.getOwnPropertyNames(type.prototype).forEach(function(name) {
-        if (name != 'constructor') {
-            proxy[name] = function() {
-                return type.prototype[name].apply(instance(type), arguments);
-            }
-        }
-    });
-    type.$$_proxy = proxy;
+
+var symProvider = Symbol('provider'),
+    symTypes = Symbol('types');
+
+function defaultProvider(type) {
+    if (type[symTypes]) {
+        return function() {
+            var args = type[symTypes].map(function(t) {
+                return instance(t);
+            });
+            return new (Function.prototype.bind.apply(type, [null].concat(args)));
+        };
+    }
+    return function() {return new type()};
 }
 
 export function provider(type) {
-    if (!type.$$_provider) {
-        type.$$_provider = defaultProvider(type);
+    if (!type[symProvider]) {
+        type[symProvider] = defaultProvider(type);
     }
-    return type.$$_provider;
+    return type[symProvider];
 }
 
 export function provides(type, factory) {
-    type.$$_provider = factory;
+    type[symProvider] = factory;
 }
 
 export function singleton(type) {
-    type.$$_provider = function() {
+    type[symProvider] = function() {
         var instance = defaultProvider(type)();
 
-        type.$$_provider = function() {
+        type[symProvider] = function() {
             return instance;
         };
 
         return instance;
-    }
+    };
 }
 
 export function inject() {
@@ -46,21 +48,11 @@ export function inject() {
         types[i] = arguments[i];
 
     return function(target) {
-        target.$$_providers = types.map(provider);
-    }
+        target[symTypes] = types;
+    };
 }
 
 export function instance(type) {
     return provider(type)();
 }
 
-function defaultProvider(type) {
-    if (type.$$_providers) {
-        return function() {
-            var args = type.$$_providers.map(function(p) {return p()});
-            return new (Function.prototype.bind.apply(type, [null].concat(args)));
-        }
-    }
-    return function() {return new type()};
-    
-}

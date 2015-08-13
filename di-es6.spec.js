@@ -74,39 +74,3 @@ describe('Singleton', function() {
     });
     
 });
-
-describe('Proxy', function() {
-    it('should call the method and inject a instance as this', function() {
-        class Test {
-            constructor(name) {
-                this.name = name || 'test';
-            }
-
-            getName() {
-                return this.name;
-            }
-        }
-
-        provides(Test, () => new Test('injected'));
-
-        expect(proxy(Test).getName()).to.equal('injected');
-    });
-
-    it('should pass the arguments', function() {
-        class Test {
-            constructor(name) {
-                this.name = name || 'test';
-            }
-
-            showMessage(msg) {
-                return this.name + ': ' + msg; 
-            }
-        } 
-
-        provides(Test, () => new Test('injected'));
-
-        expect(instance(Test).name).to.equal('injected');
-
-        expect(proxy(Test).showMessage('teste')).to.equal('injected: teste');
-    });
-});
