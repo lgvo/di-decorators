@@ -19,10 +19,10 @@ Yout need a ES.next transpiler to run di-decorators, in that case Babel.
 $ npm install --global babel 
 ```
 
-Right now to use decorators with Babel you need to configure it with state 1.
+Right now to use decorators with Babel you need to configure it with stage 1.
 Simple add a ".babelrc" file on the root of your project:
 ```javascript
-{"state": 1}
+{"stage": 1}
 ```
 
 For more details on how to use babel: [https://babeljs.io](https://babeljs.io)
