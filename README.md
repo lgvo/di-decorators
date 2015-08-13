@@ -48,7 +48,7 @@ myObject.dependency; // will be a  instance of ClassToBeInjected
 ```
 
 You can inject any class, by default a new instance will be created.
-In the last example the call to "instance(MyClass)" will be the same of "new MyClass(new ClassToBeInjected)". 
+In the last example the call to "instance(MyClass)" will be the same as "new MyClass(new ClassToBeInjected())". 
 
 ### Singleton
 
@@ -78,10 +78,10 @@ var a = instance(A),
     b = instance(B);
 
 a.one === b.one; // will be true, the instance is the same
-a.one === isntance(TheOne); // also true
+a.one === instace(TheOne); // also true
 ```
 
-If you want to have only one instance of some class you can use the @singleton decorator, that way every time you will inject the same instance of the class.
+If you want to have only one instance of some class you can use the @singleton decorator, that way every time you inject the same instance of the class.
 
 
 ### Defining your own provider.
@@ -95,14 +95,14 @@ class MyClass {
     }
 }
 
-provide(MyClass).with(function() {
+provide(MyClass).as(function() {
     return new MyClass('provider');
 });
 
 instance(MyClass).name; // will be the 'provider' string;
 ```
 
-You can use provide to define how you want to create your the instance.
+You can use provide to define how to create the instance.
 
 ## License
 [MIT](LICENSE)
