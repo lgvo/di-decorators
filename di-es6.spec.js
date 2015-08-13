@@ -1,9 +1,9 @@
 import chai from 'chai';
-import {proxy, provides, provider, singleton, inject, instance} from './di';
+import {proxy, provide, provider, singleton, inject, instance} from './di';
 
 const expect = chai.expect;
 
-describe('Provides', function() {
+describe('Provide', function() {
 
     it('should create a function provider for a class', function() {
         
@@ -13,7 +13,7 @@ describe('Provides', function() {
             }
         }
         
-        provides(Test, ()  => new Test('factory'));
+        provide(Test).as(()  => new Test('factory'));
 
         expect(provider(Test)).to.exist;
         expect(instance(Test).name).to.equal('factory');

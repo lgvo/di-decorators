@@ -26,8 +26,12 @@ export function provider(type) {
     return type[symProvider];
 }
 
-export function provides(type, factory) {
-    type[symProvider] = factory;
+export function provide(type, factory) {
+    return {
+        as: function(factory) {
+            type[symProvider] = factory;
+        } 
+    }
 }
 
 export function singleton(type) {

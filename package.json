@@ -1,7 +1,7 @@
 {
   "name": "di-decorators",
-  "version": "0.0.6",
-  "description": "Dependency Injection for ES6",
+  "version": "0.1.0",
+  "description": "Simple Dependency Injection with ES Decorators",
   "main": "common.js",
   "dependencies": {},
   "devDependencies": {
@@ -16,6 +16,14 @@
     "build": "babel --modules common di.js > common.js",
     "test": "mocha --compilers js:babel/register di-es6.spec.js"
   },
+  "keywords": [
+    "di",
+    "dependency injection",
+    "decorator",
+    "decorators",
+    "es6",
+    "es next"
+  ],
   "author": "Luis Oliveira <luisgustavo.vilela@gmail.com> (http://github.com/lgvo)",
   "license": "MIT"
 }
