@@ -103,5 +103,14 @@ instance(MyClass).name; // will be the 'provider' string;
 
 You can use provide to define how to create the instance.
 
+## See Also
+* [restful-express](https://github.com/lgvo/restful-express) declarative way to define Express routers using decorators.
+* [express-promise-wrapper](https://github.com/lgvo/express-promise-wrapper) simple wrapper to to transform promise results into express functions.
+
+## Contributing
+
+* Please take the time to star the project if you like it! "npm star di-decorators" and also on github [di-decorators](https://github.com/lgvo/di-decorators).
+* Feel free to fork, and if you are planning to add more features please open a issue so we can discuss about.
+
 ## License
 [MIT](LICENSE)
