@@ -74,3 +74,133 @@ describe('Singleton', function() {
     });
     
 });
+
+describe('Inheritance', function() {
+    it('should support for use the Super dependencies', function() {
+        var queue = [];
+
+        class Publisher {
+            send(message) {
+                queue.push(message);
+            }
+        }
+
+        class Subscriber {
+            consume() {
+                return queue.pop();
+            }
+        }
+
+        @inject(Publisher)
+        class Super {
+            constructor(publisher) {
+                this.publisher = publisher;
+                expect(publisher instanceof Publisher).to.be.true;
+            }
+
+            send(message) {
+                this.publisher.send(message);
+            }
+
+        }
+
+        @inject(Subscriber)
+        class MyClass extends Super { 
+            constructor(subscriber, publisher) {
+                super(publisher);
+                this.subscriber = subscriber;
+                expect(subscriber instanceof Subscriber).to.be.true;
+            }
+
+            publish(message) {
+                super.send(message);
+            }
+
+            consume() {
+                return this.subscriber.consume();
+            }
+        }
+
+        var myObj = instance(MyClass);
+        myObj.publish('test');
+
+        expect(myObj.consume()).to.equal('test');
+        expect(queue).to.be.empty;
+    });
+
+    it('should support multiple dependencies', function() {
+
+        class A {}
+        class B {}
+        class C {}
+
+        @inject(A,B,C)
+        class ABC {
+            constructor(a,b,c) {
+                this.a = a;
+                this.b = b;
+                this.c = c;
+            }
+        }
+
+        class D {}
+
+        @inject(D)
+        class MyClass extends ABC {
+            constructor(d, ...args) {
+                super(...args);
+                this.d = d;
+            }
+        }
+        
+        var myObj = instance(MyClass);
+        
+        expect(myObj.a instanceof A).to.be.true;
+        expect(myObj.b instanceof B).to.be.true;
+        expect(myObj.c instanceof C).to.be.true;
+        expect(myObj.d instanceof D).to.be.true;
+    });
+
+    it('should support more than 2 levels', function() {
+
+        var count = 0;
+
+        class A {}
+        class B {}
+        class C {}
+
+        @inject(A)
+        class Grandfather {
+            constructor(a) {
+                expect(a instanceof A).to.be.true;
+                count++;
+            }
+
+        }
+
+        @inject(B)
+        class Father extends Grandfather {
+            constructor(b, a) {
+                super(a);
+                expect(b instanceof B).to.be.true;
+                count++;
+            }
+            
+        }
+
+        @inject(C)
+        class Son extends Father{
+            constructor(c, b, a) {
+                super(b, a);
+                expect(c instanceof C).to.be.true;
+                count++;
+            }
+        }
+
+        instance(Son);
+
+        expect(count).to.equal(3);
+        
+    });
+
+});

@@ -48,11 +48,16 @@ export function singleton(type) {
 
 export function inject() {
     var types = [];
-    for(var i = 0; i < arguments.length; i++)
+    for(var i = 0; i < arguments.length; i++) {
         types[i] = arguments[i];
+    }
 
     return function(target) {
-        target[symTypes] = types;
+        if (target[symTypes]) {
+            target[symTypes] = types.concat(target[symTypes]);
+        } else {
+            target[symTypes] = types;
+        }
     };
 }
 
