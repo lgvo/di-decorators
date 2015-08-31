@@ -82,6 +82,77 @@ a.one === instace(TheOne); // also true
 
 If you want to have only one instance of some class you can use the @singleton decorator, that way every time you inject the same instance of the class.
 
+### Inheritance
+
+```javascript
+import {instance, inject} from 'di-decorators';
+
+class Hello {
+    message() {
+        return "Hello";
+    }
+}
+
+@inject(Hello)
+class Super {
+    constructor(hello) {
+        this.hello = hello;
+    }
+}
+
+class World {
+    message() {
+        return "World";
+    }
+}
+
+@inject(World)
+class MyClass extends Super {
+    constructor(world, hello) {
+        super(hello);
+        this.world = world;
+    }
+
+    helloWorld() {
+        return this.hello.message() + ' ' +
+               this.world.message() + '!';
+    }
+}
+
+instance(MyClass).helloWorld(); // will be the string 'Hello World!'
+
+```
+
+So how it works? Basically when you extend a class with dependency injections we add theses dependencies to the current class so you can pass to the super constructor.
+
+
+The ideal way to do that is using rest parameters, so you can add more dependencies to the super class without worry to change everyone that extends it.
+
+Se the example bellow:
+```javascript
+
+class A {}
+class B {}
+
+@inject(A, B)
+class Super {
+    constructor(a, b) {
+        this.a = a;
+        this.b = b; 
+    }
+}
+
+class C {}
+
+@inject(C)
+class MyClass extends Super {
+    constructor(c, ...args) {
+        super(...args);
+        this.c= c;
+    }
+}
+```
+
 
 ### Defining your own provider.
 
