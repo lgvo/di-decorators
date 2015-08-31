@@ -1,5 +1,13 @@
 # Simple Dependency Injection with ES Decorators
 
+[![Build Status](https://travis-ci.org/lgvo/di-decorators.svg?branch=master)](https://travis-ci.org/lgvo/di-decorators)
+[![Coverage Status](https://coveralls.io/repos/lgvo/di-decorators/badge.svg?branch=master&service=github)](https://coveralls.io/github/lgvo/di-decorators?branch=master)
+[![npm version](https://badge.fury.io/js/di-decorators.svg)](http://badge.fury.io/js/di-decorators)
+[![Code Climate](https://codeclimate.com/github/lgvo/di-decorators/badges/gpa.svg)](https://codeclimate.com/github/lgvo/di-decorators)
+[![npm](https://img.shields.io/npm/dm/di-decorators.svg)](https://www.npmjs.com/package/di-decorators)
+
+
+
 This project is a easy to use little dependency injection framework on top of ES Decorators.
 The basic idea is to have a easy way to declare dependencies with ES decorators.
 
