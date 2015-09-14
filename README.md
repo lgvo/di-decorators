@@ -1,5 +1,7 @@
 # Simple Dependency Injection with ES Decorators
 
+[![Join the chat at https://gitter.im/lgvo/di-decorators](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lgvo/di-decorators?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/lgvo/di-decorators.svg?branch=master)](https://travis-ci.org/lgvo/di-decorators)
 [![Coverage Status](https://coveralls.io/repos/lgvo/di-decorators/badge.svg?branch=master&service=github)](https://coveralls.io/github/lgvo/di-decorators?branch=master)
 [![npm version](https://badge.fury.io/js/di-decorators.svg)](http://badge.fury.io/js/di-decorators)
