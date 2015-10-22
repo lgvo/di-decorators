@@ -1,6 +1,6 @@
 {
   "name": "di-decorators",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple Dependency Injection with ES Decorators",
   "main": "common.js",
   "repository": "lgvo/di-decorators",
@@ -29,7 +29,7 @@
     "dependency injection",
     "decorator",
     "decorators",
-    "es6",
+    "es7",
     "es next"
   ],
   "author": "Luis Oliveira <luisgustavo.vilela@gmail.com> (http://github.com/lgvo)",
