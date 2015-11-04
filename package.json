@@ -1,6 +1,6 @@
 {
   "name": "di-decorators",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Simple Dependency Injection with ES Decorators",
   "main": "common.js",
   "repository": "lgvo/di-decorators",
