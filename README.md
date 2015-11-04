@@ -12,6 +12,7 @@
 This project is a easy to use little dependency injection framework on top of ES Decorators.
 The basic idea is to have a easy way to declare dependencies with ES decorators.
 
+** Please take the time to star the project if you like it! "npm star di-decorators" and also on github [di-decorators](https://github.com/lgvo/di-decorators). **
 
 ## Installation
 
@@ -57,6 +58,29 @@ myObject.dependency; // will be a  instance of ClassToBeInjected
 
 You can inject any class, by default a new instance will be created.
 In the last example the call to "instance(MyClass)" will be the same as "new MyClass(new ClassToBeInjected())". 
+
+### Immutable
+
+```javascript
+import {instance, immutable} from 'di-decorators';
+
+@immutable
+class CannotChange {
+    constructor() {
+        this.value = 1;
+    }
+}
+
+var obj = instance(CannotChange);
+
+obj.value; // 1
+Object.isFrozen(obj); // true
+
+obj.value = 2; // Throws a TypeError: Cannot assign to read only property 'value'
+
+```
+
+You can mark a class as immutable so the instance will be frozen.
 
 ### Singleton
 
@@ -188,9 +212,10 @@ You can use provide to define how to create the instance.
 * [express-promise-wrapper](https://github.com/lgvo/express-promise-wrapper) simple wrapper to to transform promise results into express functions.
 
 ## Contributing
-
-* Please take the time to star the project if you like it! "npm star di-decorators" and also on github [di-decorators](https://github.com/lgvo/di-decorators).
+* Pull Requests are welcome!
 * Feel free to fork, and if you are planning to add more features please open a issue so we can discuss about.
+* Mind the test coverage and code complexity, if you can do it with TDD probably will come with both.
+* Try to use only ES5 in the core lib.
 
 ## License
 [MIT](LICENSE)
