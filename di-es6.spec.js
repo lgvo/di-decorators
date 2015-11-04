@@ -1,5 +1,5 @@
 import chai from 'chai';
-import {proxy, provide, provider, singleton, inject, instance} from './di';
+import {proxy, immutable, provide, provider, singleton, inject, instance} from './di';
 
 const expect = chai.expect;
 
@@ -55,7 +55,7 @@ describe('Inject', function() {
 describe('Singleton', function() {
 
     it('should only have one instance', function() {
-       @singleton
+      @singleton
       class Single {
           constructor() {
               this.name = 'singleton';
@@ -73,6 +73,26 @@ describe('Singleton', function() {
       
     });
     
+});
+
+describe('Immutable', function() {
+
+    it('should create immutable objects', function() {
+        @immutable
+        class CantChange {
+            constructor() {
+                this.name = 'original';
+            }
+        }
+
+        // direct wont be fronzen   
+        expect(Object.isFrozen(new CantChange())).to.be.false;
+
+        // using 
+        expect(Object.isFrozen(instance(CantChange))).to.be.true;
+
+    });
+
 });
 
 describe('Inheritance', function() {

@@ -1,22 +1,54 @@
-// use Symbol if supported
-var Symbol = Symbol || function(str) {
+function  nsPrefix(str) {
     return '__$$' + str;
-};
+}
 
+var symProvider = nsPrefix('provider'),
+    symInterceptors = nsPrefix('interceptors'),
+    symTypes = nsPrefix('types');
 
-var symProvider = Symbol('provider'),
-    symTypes = Symbol('types');
+function argsResolver(type) {
+    return type[symTypes].map(function(t) {
+        return instance(t);
+    });
+}
+
+function interceptorsOf(type) {
+    if (!type[symInterceptors]) {
+        type[symInterceptors] = [];
+    }
+
+    return type[symInterceptors];
+}
+
+function intercept(obj, interceptors) {
+    return interceptors.reduce(function(newInstance, interceptor) {
+        return interceptor(newInstance);
+    }, obj);
+}
 
 function defaultProvider(type) {
+    var interceptors = interceptorsOf(type);
+
     if (type[symTypes]) {
         return function() {
-            var args = type[symTypes].map(function(t) {
-                return instance(t);
-            });
-            return new (Function.prototype.bind.apply(type, [null].concat(args)));
+            var obj = new (Function.prototype.bind.apply(type, [null].concat(argsResolver(type))));
+
+            if (interceptors.length > 0) {
+                obj = intercept(obj, interceptors);
+            }
+
+            return obj;
         };
     }
-    return function() {return new type()};
+    return function() {
+        var obj = new type();
+
+        if (interceptors.length > 0) {
+            obj = intercept(obj, interceptors);
+        }
+
+        return obj;
+    };
 }
 
 export function provider(type) {
@@ -31,7 +63,7 @@ export function provide(type, factory) {
         as: function(factory) {
             type[symProvider] = factory;
         } 
-    }
+    };
 }
 
 export function singleton(type) {
@@ -44,6 +76,12 @@ export function singleton(type) {
 
         return instance;
     };
+}
+
+export function immutable(type) {
+    interceptorsOf(type).push(function(newInstance) {
+        return Object.freeze(newInstance);
+    });
 }
 
 export function inject() {
