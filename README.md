@@ -12,7 +12,7 @@
 This project is a easy to use little dependency injection framework on top of ES Decorators.
 The basic idea is to have a easy way to declare dependencies with ES decorators.
 
-** Please take the time to star the project if you like it! "npm star di-decorators" and also on github [di-decorators](https://github.com/lgvo/di-decorators). **
+**Please take the time to star the project if you like it! "npm star di-decorators" and also on github [di-decorators](https://github.com/lgvo/di-decorators).**
 
 ## Installation
 
