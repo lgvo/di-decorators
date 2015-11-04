@@ -93,6 +93,51 @@ describe('Immutable', function() {
 
     });
 
+    it('should create immutable objects (with dependencies)', function() {
+
+        class Dependency {
+            constructor() {
+                this.name = 'dep';
+            }
+        }
+
+        @immutable
+        @inject(Dependency)
+        class CantChange {
+            constructor(dep) {
+                this.dep = dep;
+                this.name = 'original';
+            }
+        }
+
+        // direct wont be fronzen   
+        expect(Object.isFrozen(new CantChange())).to.be.false;
+
+        // using 
+        expect(Object.isFrozen(instance(CantChange))).to.be.true;
+
+        expect(instance(CantChange).dep.name).to.equal('dep');
+
+    });
+
+    it('should work as a immutable dependency', function() {
+        @immutable
+        class Dependency {
+            constructor() {
+                this.name = 'dep';
+            }
+        }
+
+        @inject(Dependency)
+        class Test {
+            constructor(dep) {
+                this.dep = dep;
+            }
+        }
+
+        expect(Object.isFrozen(instance(Test).dep)).to.be.true;
+
+    });
 });
 
 describe('Inheritance', function() {
